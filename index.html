@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinyin Wheel - Valid Combinations Only</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg,#e8f4ff,#fef0f8);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100vh;
+            padding:20px;
+        }
+        .container {
+            display:flex;
+            gap:24px;
+            background:#fff;
+            border-radius:24px;
+            padding:30px;
+            box-shadow:0 4px 16px rgba(0,0,0,0.08);
+            max-width:920px;
+            align-items:center;
+        }
+        .left-card {
+            text-align:center;
+        }
+        .title {
+            font-size:28px;
+            color:#4444bb;
+            margin-bottom:20px;
+            font-weight:bold;
+        }
+        .wheel-wrap {
+            position:relative;
+            width:360px;
+            height:360px;
+        }
+        .wheel {
+            width:100%;
+            height:100%;
+            border-radius:50%;
+            background:conic-gradient(
+                #87d8ff 0deg 15deg, #94dfff 15deg 30deg, #a0e4ff 30deg 45deg, #b0e8ff 45deg 60deg,
+                #bcebff 60deg 75deg, #c6eeff 75deg 90deg, #cff0ff 90deg 105deg, #d8f2ff 105deg 120deg,
+                #e0f4ff 120deg 135deg, #e7f5ff 135deg 150deg, #edf7ff 150deg 165deg, #f2f8ff 165deg 180deg,
+                #fff2f8 180deg 195deg, #ffe9f2 195deg 210deg, #ffe1ec 210deg 225deg, #ffd9e6 225deg 240deg,
+                #ffd0e0 240deg 255deg, #ffc7d9 255deg 270deg, #ffbcd2 270deg 285deg, #ffb2cb 285deg 300deg,
+                #ffa7c4 300deg 315deg, #ff9bbc 315deg 330deg, #ff8fb4 330deg 345deg, #ff83ac 345deg 360deg
+            );
+            position:relative;
+            transition: transform 4s cubic-bezier(0.2,0.8,0.2,1);
+        }
+        .wheel-item {
+            position:absolute;
+            width:50%;
+            height:50%;
+            top:0;
+            left:50%;
+            transform-origin: bottom left;
+            text-align:center;
+            padding-top:12px;
+            font-size:14px;
+            color:#222;
+            font-weight:500;
+        }
+        .center-btn {
+            position:absolute;
+            width:90px;
+            height:90px;
+            border-radius:50%;
+            background:#5544dd;
+            color:white;
+            font-size:20px;
+            font-weight:bold;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+            z-index:2;
+            user-select:none;
+        }
+        .pointer {
+            position:absolute;
+            top:-10px;
+            left:50%;
+            transform:translateX(-50%);
+            width:0;
+            height:0;
+            border-left:12px solid transparent;
+            border-right:12px solid transparent;
+            border-top:24px solid #ff4466;
+            z-index:3;
+        }
+        .result-box {
+            width:240px;
+            border:1px solid #dde4f0;
+            border-radius:12px;
+            padding:20px;
+            background:#fcfdff;
+        }
+        .result-title {
+            text-align:center;
+            font-size:18px;
+            margin-bottom:16px;
+            color:#333;
+        }
+        .result-line {
+            margin:14px 0;
+            font-size:16px;
+            color:#333;
+        }
+        .right-desc {
+            width:320px;
+        }
+        .tag-yellow {
+            background:#ffd233;
+            color:#222;
+            font-weight:bold;
+            padding:8px 16px;
+            border-radius:30px;
+            display:inline-block;
+            font-size:20px;
+        }
+        .desc-title {
+            font-size:42px;
+            font-weight:bold;
+            margin:12px 0;
+            color:#222;
+        }
+        .desc-text {
+            font-size:20px;
+            color:#555;
+            line-height:1.6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left-card">
+        <div class="title">Pinyin Wheel <span style="font-size:16px;color:#999">Lin Dai ♡</span></div>
+        <div class="wheel-wrap">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel">
+                <div class="wheel-item" style="transform: rotate(7.5deg)">b</div>
+                <div class="wheel-item" style="transform: rotate(22.5deg)">p</div>
+                <div class="wheel-item" style="transform: rotate(37.5deg)">m</div>
+                <div class="wheel-item" style="transform: rotate(52.5deg)">f</div>
+                <div class="wheel-item" style="transform: rotate(67.5deg)">d</div>
+                <div class="wheel-item" style="transform: rotate(82.5deg)">t</div>
+                <div class="wheel-item" style="transform: rotate(97.5deg)">n</div>
+                <div class="wheel-item" style="transform: rotate(112.5deg)">l</div>
+                <div class="wheel-item" style="transform: rotate(127.5deg)">g</div>
+                <div class="wheel-item" style="transform: rotate(142.5deg)">k</div>
+                <div class="wheel-item" style="transform: rotate(157.5deg)">h</div>
+                <div class="wheel-item" style="transform: rotate(172.5deg)">j</div>
+                <div class="wheel-item" style="transform: rotate(187.5deg)">q</div>
+                <div class="wheel-item" style="transform: rotate(202.5deg)">x</div>
+                <div class="wheel-item" style="transform: rotate(217.5deg)">zh</div>
+                <div class="wheel-item" style="transform: rotate(232.5deg)">ch</div>
+                <div class="wheel-item" style="transform: rotate(247.5deg)">sh</div>
+                <div class="wheel-item" style="transform: rotate(262.5deg)">r</div>
+                <div class="wheel-item" style="transform: rotate(277.5deg)">z</div>
+                <div class="wheel-item" style="transform: rotate(292.5deg)">c</div>
+                <div class="wheel-item" style="transform: rotate(307.5deg)">s</div>
+                <div class="wheel-item" style="transform: rotate(322.5deg)">a</div>
+                <div class="wheel-item" style="transform: rotate(337.5deg)">o</div>
+                <div class="wheel-item" style="transform: rotate(352.5deg)">e</div>
+                <div class="center-btn" id="startBtn">Start</div>
+            </div>
+        </div>
+        <div class="result-box">
+            <div class="result-title">Result</div>
+            <div class="result-line">Initial: <span id="initial">-</span></div>
+            <div class="result-line">Final: <span id="final">-</span></div>
+            <div class="result-line">Tone: <span id="tone">-</span></div>
+            <div class="result-line">Pinyin: <span id="pinyin">-</span></div>
+        </div>
+    </div>
+    <div class="right-desc">
+        <div class="tag-yellow">Random Quiz</div>
+        <h1 class="desc-title">Pinyin Wheel</h1>
+        <p class="desc-text">Random valid pinyin. Great for warm-up and oral practice.</p>
+    </div>
+</div>
+
+<script>
+    const wheel = document.getElementById('wheel');
+    const startBtn = document.getElementById('startBtn');
+    const initialDom = document.getElementById('initial');
+    const finalDom = document.getElementById('final');
+    const toneDom = document.getElementById('tone');
+    const pinyinDom = document.getElementById('pinyin');
+
+    const validPairs = [
+        ["b","a"],["b","o"],["b","ai"],["b","ei"],["b","ao"],["b","ou"],["b","an"],["b","en"],["b","ang"],["b","eng"],["b","i"],
+        ["p","a"],["p","o"],["p","ai"],["p","ei"],["p","ao"],["p","ou"],["p","an"],["p","en"],["p","ang"],["p","eng"],["p","i"],
+        ["m","a"],["m","o"],["m","e"],["m","ai"],["m","ei"],["m","ao"],["m","ou"],["m","an"],["m","en"],["m","ang"],["m","eng"],["m","i"],
+        ["f","a"],["f","o"],["f","ai"],["f","ei"],["f","ao"],["f","ou"],["f","an"],["f","en"],["f","ang"],["f","eng"],
+        ["d","a"],["d","e"],["d","ai"],["d","ei"],["d","ao"],["d","ou"],["d","iu"],["d","an"],["d","en"],["d","ang"],["d","eng"],["d","i"],["d","u"],
+        ["t","a"],["t","e"],["t","ai"],["t","ao"],["t","ou"],["t","iu"],["t","an"],["t","eng"],["t","i"],["t","u"],
+        ["n","a"],["n","e"],["n","ai"],["n","ei"],["n","ao"],["n","ou"],["n","iu"],["n","an"],["n","en"],["n","ang"],["n","eng"],["n","i"],["n","ü"],["n","u"],
+        ["l","a"],["l","e"],["l","ai"],["l","ei"],["l","ao"],["l","ou"],["l","iu"],["l","an"],["l","en"],["l","ang"],["l","eng"],["l","i"],["l","ü"],["l","u"],
+        ["g","a"],["g","e"],["g","ai"],["g","ei"],["g","ao"],["g","ou"],["g","an"],["g","en"],["g","ang"],["g","eng"],["g","u"],
+        ["k","a"],["k","e"],["k","ai"],["k","ei"],["k","ao"],["k","ou"],["k","an"],["k","en"],["k","ang"],["k","eng"],["k","u"],
+        ["h","a"],["h","e"],["h","ai"],["h","ei"],["h","ao"],["h","ou"],["h","an"],["h","en"],["h","ang"],["h","eng"],["h","u"],
+        ["j","i"],["j","ü"],["j","ia"],["j","ie"],["j","iao"],["j","iu"],["j","ian"],["j","in"],["j","iang"],["j","ing"],["j","üe"],["j","ün"],
+        ["q","i"],["q","ü"],["q","ia"],["q","ie"],["q","iao"],["q","iu"],["q","ian"],["q","in"],["q","iang"],["q","ing"],["q","üe"],["q","ün"],
+        ["x","i"],["x","ü"],["x","ia"],["x","ie"],["x","iao"],["x","iu"],["x","ian"],["x","in"],["x","iang"],["x","ing"],["x","üe"],["x","ün"],
+        ["zh","a"],["zh","e"],["zh","ai"],["zh","ei"],["zh","ao"],["zh","ou"],["zh","an"],["zh","en"],["zh","ang"],["zh","eng"],["zh","u"],
+        ["ch","a"],["ch","e"],["ch","ai"],["ch","ei"],["ch","ao"],["ch","ou"],["ch","an"],["ch","en"],["ch","ang"],["ch","eng"],["ch","u"],
+        ["sh","a"],["sh","e"],["sh","ai"],["sh","ei"],["sh","ao"],["sh","ou"],["sh","an"],["sh","en"],["sh","ang"],["sh","eng"],["sh","u"],
+        ["r","e"],["r","ao"],["r","ou"],["r","an"],["r","en"],["r","ang"],["r","eng"],["r","u"],
+        ["z","a"],["z","e"],["z","ai"],["z","ei"],["z","ao"],["z","ou"],["z","an"],["z","en"],["z","ang"],["z","eng"],["z","u"],
+        ["c","a"],["c","e"],["c","ai"],["c","ei"],["c","ao"],["c","ou"],["c","an"],["c","en"],["c","ang"],["c","eng"],["c","u"],
+        ["s","a"],["s","e"],["s","ai"],["s","ao"],["s","ou"],["s","an"],["s","en"],["s","ang"],["s","eng"],["s","u"]
+    ];
+
+    const toneList = [
+        {name:"first", mark:0},
+        {name:"second", mark:1},
+        {name:"third", mark:2},
+        {name:"fourth", mark:3}
+    ];
+
+    function getTonedFinal(fin, toneIndex) {
+        const toneCharMap = {
+            "a":["ā","á","ǎ","à"],
+            "o":["ō","ó","ǒ","ò"],
+            "e":["ē","é","ě","è"],
+            "i":["ī","í","ǐ","ì"],
+            "u":["ū","ú","ǔ","ù"],
+            "ü":["ǖ","ǘ","ǚ","ǜ"]
+        };
+        if(fin.includes("a")) return fin.replace("a", toneCharMap.a[toneIndex]);
+        if(fin.includes("o")) return fin.replace("o", toneCharMap.o[toneIndex]);
+        if(fin.includes("e")) return fin.replace("e", toneCharMap.e[toneIndex]);
+        if(fin === "iu") return fin.replace("u", toneCharMap.u[toneIndex]);
+        if(fin === "ui") return fin.replace("i", toneCharMap.i[toneIndex]);
+        if(fin.includes("i")) return fin.replace("i", toneCharMap.i[toneIndex]);
+        if(fin.includes("u")) return fin.replace("u", toneCharMap.u[toneIndex]);
+        if(fin.includes("ü")) return fin.replace("ü", toneCharMap.ü[toneIndex]);
+        return fin;
+    }
+
+    let isSpinning = false;
+    let currentDeg = 0;
+
+    startBtn.onclick = function() {
+        if(isSpinning) return;
+        isSpinning = true;
+        startBtn.innerText = "Spinning";
+        const randomAdd = 1800 + Math.random()*1800;
+        currentDeg += randomAdd;
+        wheel.style.transform = `rotate(${currentDeg}deg)`;
+
+        setTimeout(()=>{
+            const pair = validPairs[Math.floor(Math.random() * validPairs.length)];
+            const init = pair[0];
+            const fin = pair[1];
+            const toneItem = toneList[Math.floor(Math.random()*4)];
+            const finToned = getTonedFinal(fin, toneItem.mark);
+
+            initialDom.innerText = init;
+            finalDom.innerText = fin;
+            toneDom.innerText = toneItem.name;
+            pinyinDom.innerText = init + finToned;
+
+            startBtn.innerText = "Start";
+            isSpinning = false;
+        },4000)
+    }
+</script>
+</body>
+</html>
